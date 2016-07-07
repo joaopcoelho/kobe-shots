@@ -89,5 +89,60 @@ def logloss(act, pred):
 
 # In[ ]:
 
+def preprocess(original_data, shot_made_flag=False):
+    """
+    Pre-processing of dataframe into desired form
+    
+    Input:
+        original_data (Pandas dataframe): original data from which the final dataframe will be formed
+        shot_made_flag (boolean): whether to include labels (shot made) or not
+    
+    Output:
+        df (pandas dataframe): the dataframe in final form
 
+    Comments:
+        highly overfit to kobe shot selection problem
+        
+    """
+    
+    # select relevant features
+    feature_list = ['loc_x', 'loc_y', 'shot_distance', 'period', 'season', 'minutes_remaining', 'seconds_remaining', 
+           'matchup']
+    
+    if shot_made_flag is True:
+        feature_list.append('shot_made_flag')
+    
+    df = original_data[feature_list].copy()
+    
+    # modify selected features
+    
+    # convert shot_distance from feet to meters
+    df.loc[:,'shot_distance'] = df['shot_distance'].apply(lambda x: x*0.3048)    
+    
+    # add angle feature and clean NaN by assuming angle=0 when distance=0
+    df.loc[:,'angle'] = pd.Series(np.degrees(np.arctan(df['loc_x']/df['loc_y'])))
+    df['angle'].fillna(0, inplace=True)
+
+    # convert matchup to Home/Away (Home=0, Away=1)
+    df.loc[:, 'Home'] = df['matchup'].apply(get_home_away)    
+
+    # convert seasons to first, second etc
+    # needs: convert to date 
+    df.loc[:,'season'] = df['season'].apply(get_season_num)
+
+    # convert minutes + seconds remaining to time remaining in quarter (in seconds)
+    df.loc[:, 'time_remaining'] = df['minutes_remaining']*60 + df['seconds_remaining']
+
+    # clean dataframe
+    cols_to_delete = ['loc_x', 'loc_y', 'minutes_remaining', 'seconds_remaining', 'matchup']
+    df.drop(cols_to_delete, axis=1, inplace=True)
+    
+    # clean NaN in shot_made_flag column
+    df.dropna(axis=0, how='any', inplace=True)
+
+    # make sure no NaNs in dm
+    assert df.isnull().any().any()==False    
+    
+    return df
+    
 
