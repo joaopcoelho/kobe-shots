@@ -2,3 +2,5 @@ data/*
 data.csv
 .ipynb_checkpoints
 .DS_Store
+.pyc
+.csv
