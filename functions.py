@@ -3,6 +3,11 @@
 
 # In[1]:
 
+import pandas as pd
+import numpy as np
+import scipy as sp
+
+
 #convert shot flags to colors
 def flag_colors(flag):
     if flag == 1: return 'green'
