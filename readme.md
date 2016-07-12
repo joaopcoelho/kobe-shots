@@ -1,9 +1,19 @@
 # Kobe Bryant shot selection #
 
-Kaggle competition
+This repository contains the code developed to participate in the Kaggle competition "Kobe Bryant Shot Selection".
+
+We used two different algorithms, k-nearest neighbours and support vector classification, to predict shot outcomes.
+
+The PDF article sums up our exploration and our findings.
+
+
+Kaggle competition:
+
 https://www.kaggle.com/c/kobe-bryant-shot-selection/
 
-data is not uploaded to repo; get it at https://www.kaggle.com/c/kobe-bryant-shot-selection/data
+Data available at:
+
+https://www.kaggle.com/c/kobe-bryant-shot-selection/data
 
 ### Available data ###
 
@@ -33,3 +43,9 @@ data is not uploaded to repo; get it at https://www.kaggle.com/c/kobe-bryant-sho
     opponent
     shot_id
 
+### Authors ###
+Pedro Marcelino (github.com/pmarcelino)
+
+João Coelho (github.com/joaopcoelho)
+
+Lisbon, May 2016
